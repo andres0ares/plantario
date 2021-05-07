@@ -96,7 +96,7 @@ export default  function App() {
           setTimeout(() => setSended(false), 3000)
         }
 
-    }
+      }
 
 
     return (
