@@ -6,4 +6,14 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: aqua;
+}
+
+.root {
+    background-color: #26a69a;
+    min-height: 100vh;
+}
+
+.status {
+    margin: 10px;
 }
