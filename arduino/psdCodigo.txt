@@ -1,0 +1,81 @@
+// Dados  recebidos do usuario
+
+int tempIlum        // Tempo de iluminacao
+int umidade         // Porcentagem de umidade
+int temperatura     //temperatura em graus celcios  
+
+// dados a serem enviados para o usuario
+
+int tempMaxima      // Temperatura Maxima
+int tempMinima      // Minima Temperatura
+int nivelReser      // Nivel do reservatorio
+float ilumTotal     // Tempo total de iluminacao
+
+
+void setup () {
+
+    iniciaWifi();   // funcao para conectar ao wifi
+}
+
+void loop () {
+
+    int dia = getDia();
+    int rotina = 1  // iniciado como verdadeiro
+
+    // enquanto permanece no mesmo dia 
+    while(rotina) {
+
+        if(wifiConectado) {
+            getDados();  // funcao que pega os dados do usuario
+        } else {
+            iniciaWifi();
+        }
+        
+
+        handleTemperatura(temperatura); // funcao que ira lidar com a temperatura 
+        handleIrrigacao(umidade);       // funcao que irar lidar com a umidade
+        handleiluminacao(tempIlum);     // funcao que irar lidar com a umidade
+
+
+        int novoDia = getDia();
+        if(novoDia != dia) { 
+            /* 
+                caso o dia seja diferente, 
+                o relatorio para o usuario sera enviado,
+                a rotina recebe 0 e o while se torna falso.
+            */
+            enviarRelatorio(temMaxima, temMinima, nivelReser, ilumiTotal);
+            rotina = 0;
+        }
+    }
+
+}
+
+
+
+void iniciaWifi() {}
+
+void enviarRelatorio(int temMaxima, int tempMinima, int nivelReser, float ilumiTotal) { }
+
+void handleTemperatura(int temp) {
+
+    float tempAtual = getTemperatura(); // pega temperatura do sensor
+
+    // atualiza valor maximo e minimo da temperatura
+    if(tempMaxima < tempAtual) 
+        temMaxima = tempAtual
+    ; 
+    if(tempAual < tempMinima )
+        tempMinima = tempAtual
+    ;
+
+    // liga ou desliga o cooler
+    if(tempAtual > temp) {
+        ligaCooler();
+    }
+
+}
+void handleIrrigacao(int umi) {}
+void handleIluminacao(int time) {}
+
+float getTemperatura() {}
