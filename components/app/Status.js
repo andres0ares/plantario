@@ -13,13 +13,18 @@ import CardMedia from '@material-ui/core/CardMedia'
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        padding: '30px 0',
         minWidth: 275,
     },
     marginCard: {
         marginBottom: '30px'
     },
     marginCardLast: {
+        
         marginBottom: '70px'
+    },
+    padd: {
+        padding: '30px 0',
     },
     title: {
         fontSize: 14,
@@ -36,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 12,
     },
     rootP: {
+        padding: '30px 0',
         display: 'flex',
       },
       details: {
