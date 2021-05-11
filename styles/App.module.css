@@ -12,10 +12,39 @@
     
     background-image: linear-gradient( #26a69a  , #00796b);
     min-height: 100vh;
+    padding-top: 20px;
 }
 
 .status {
     margin: 10px;
+}
+
+
+
+/* navbar */
+
+.appBar {
+    top: auto;
+    bottom: 0;
+    background-color: 'white';
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.fabButton {
+    position: 'absolute';
+    z-index: 1;
+    top: -30;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background-image: linear-gradient(to right, #80cbc4 , #26a69a );
+    color: 'white';
+}
+.icon {
+    color: '#26a69a';
 }
 /*
 background-color: #26a69a;

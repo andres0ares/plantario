@@ -1,4 +1,4 @@
-import styles from '../styles/App.module.css'
+import Styles from '../styles/App.module.css'
 import Link from 'next/link'
 import { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
@@ -7,15 +7,24 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Fab from '@material-ui/core/Fab'
-import MenuIcon from '@material-ui/icons/Menu'
-import AddIcon from '@material-ui/icons/Add'
-import CloseIcon from '@material-ui/icons/Close'
-import MoreIcon from '@material-ui/icons/MoreVert'
 import Grid from '@material-ui/core/Grid'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Divider from '@material-ui/core/Divider'
 
 import AppNav from '../components/app/AppNav'
 import Status from '../components/app/Status'
 import Setup from '../components/app/Setup'
+
+// Icons
+
+import MenuIcon from '@material-ui/icons/Menu'
+import AddIcon from '@material-ui/icons/Add'
+import CloseIcon from '@material-ui/icons/Close'
+import DoneAllIcon from '@material-ui/icons/DoneAll'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import UpdateIcon from '@material-ui/icons/Update'
 
 const dados = { 
   temperatura: '25º graus',
@@ -31,6 +40,10 @@ const useStyle = makeStyles((theme) => ({
     top: 'auto',
     bottom: 0,
     backgroundColor: 'white'
+  },
+  menu: {
+    backgroundColor: 'white',
+    color: '#00897b'
   },
   grow: {
     flexGrow: 1,
@@ -54,6 +67,8 @@ export default  function App() {
 
   const [status, setStatus] = useState(true)
   const [setup, setSetup] = useState(false)
+  const [menu, setMenu] = useState(false)
+  const [refresh, setRefresh] = useState(false)
 
   const classes = useStyle()
 
@@ -62,12 +77,20 @@ export default  function App() {
     setStatus(!status)
   }
 
-  return (
-    <div className={styles.root}>
-      <Link href={'/'}><Button>Voltar</Button></Link>
-      
+  const handleMenu = () => {
+    setMenu(!menu)
+  }
 
-      {status && <div className={styles.status}><Status data={dados}/></div>}
+  const handleRefresh = () => {
+    setRefresh(true)
+    setTimeout(() => setRefresh(false), 5000)
+  }
+
+  return (
+    <div className={Styles.root}>
+          
+
+      {status && <div className={Styles.status}><Status data={dados}/></div>}
       
       {setup && <Grid container>
         <Grid item xs></Grid>
@@ -77,21 +100,42 @@ export default  function App() {
       }
 
       <AppBar position="fixed" color="primary" className={classes.appBar}>
-          <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="open drawer">
-              <MenuIcon className={classes.icon} />
-          </IconButton>
-          <Fab aria-label="add" onClick={handleClick} className={classes.fabButton}>
-            {status && <AddIcon /> }
-            {setup && <CloseIcon /> }
-          </Fab>
-          <div className={classes.grow} />
-          <IconButton edge="end" color="inherit">
-              <MoreIcon className={classes.icon} />
-          </IconButton>
-          </Toolbar>
+
+        <Toolbar>
+        <IconButton onClick={handleMenu} edge="start" color="inherit" aria-label="open drawer">
+            { menu ? <ExpandMoreIcon className={classes.icon} /> : <MenuIcon className={classes.icon} />}
+        </IconButton>
+        <Fab aria-label="add" onClick={handleClick} className={classes.fabButton}>
+          {status && <AddIcon /> }
+          {setup && <CloseIcon /> }
+        </Fab>
+        <div className={classes.grow} />
+        <IconButton edge="end" color="inherit">
+            {refresh ? <DoneAllIcon className={classes.icon} /> : <UpdateIcon onClick={handleRefresh} className={classes.icon} />}
+        </IconButton>
+        </Toolbar>
+
+        {menu && 
+          <div className={classes.menu}>
+            <List component="nav" aria-label="secondary mailbox folders">
+              <Divider />
+              <Link href={'/'}><ListItem button>
+                <ListItemText primary="Início" />
+              </ListItem></Link>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Relatórios" />
+              </ListItem>
+              <Divider />
+              <ListItem button onClick={handleClick}>
+                <ListItemText primary="Configuração" />
+              </ListItem>
+            </List>
+          </div>
+        }
       </AppBar>
 
+      
     </div>
   )
 
