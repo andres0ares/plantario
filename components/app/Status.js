@@ -77,6 +77,7 @@ export default function Status(props) {
                             Temperatura: 28º <br />
                             Umidade: 65% <br />
                             Exposição: 5hrs <br />
+                            Espécie: Hortelã
                         </Typography>
                         </CardContent>
                     </div>
