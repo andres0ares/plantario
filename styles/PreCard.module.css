@@ -1,7 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
+
 .root {
-    width: 130px;
-    height: 180px;
-    line-height: 170px;
+    width: 140px;
+    height: 190px;
     background-color: white;
     border-radius: 10px;
+    align-items: center;
+    text-align: center;
+}
+.rootClicked {
+    width: 140px;
+    height: 190px;
+    background-color: white;
+    border: #00695c solid 5px;
+    border-radius: 10px;
+    align-items: center;
+    text-align: center;
+}
+
+.text1 {
+    margin: 5px 0 5px 15px;
+    text-align: left;
+    color: #424242;
+}
+
+
+.icon {
+    margin-left: 10px;
+    color: #00897b;
+}
+
+.title {
+    margin-top: 60px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 18px;
+}
+.selecionado {
+    color: #424242;
+    margin: 0;
+    font-size: 14px;
+}
+.dados {
+    margin-bottom: -50px;
 }

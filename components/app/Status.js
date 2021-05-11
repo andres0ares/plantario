@@ -43,16 +43,16 @@ const useStyles = makeStyles((theme) => ({
     rootP: {
         padding: '30px 0',
         display: 'flex',
-      },
-      details: {
-        display: 'flex',
-        flexDirection: 'column',
-      },
-      content: {
-        flex: '1 0 auto',
-      },
-      cover: {
-        width: 151,
+    },
+    details: {
+    display: 'flex',
+    flexDirection: 'column',
+    },
+    content: {
+    flex: '1 0 auto',
+    },
+    cover: {
+    width: 151,
     },
 }))
 

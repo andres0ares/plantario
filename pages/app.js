@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
 import MoreIcon from '@material-ui/icons/MoreVert'
+import Grid from '@material-ui/core/Grid'
 
 import AppNav from '../components/app/AppNav'
 import Status from '../components/app/Status'
@@ -64,10 +65,15 @@ export default  function App() {
   return (
     <div className={styles.root}>
       <Link href={'/'}><Button>Voltar</Button></Link>
+      
 
       {status && <div className={styles.status}><Status data={dados}/></div>}
       
-      {setup && <div className={styles.status}><Setup /></div>}
+      {setup && <Grid container className={styles.status}>
+        <Grid item xs></Grid>
+        <Grid item xs={12} md={5}><Setup /></Grid>
+        <Grid item xs></Grid>
+      </Grid> }
 
       <AppBar position="fixed" color="primary" className={classes.appBar}>
           <Toolbar>
