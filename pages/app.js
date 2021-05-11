@@ -69,11 +69,12 @@ export default  function App() {
 
       {status && <div className={styles.status}><Status data={dados}/></div>}
       
-      {setup && <Grid container className={styles.status}>
+      {setup && <Grid container>
         <Grid item xs></Grid>
         <Grid item xs={12} md={5}><Setup /></Grid>
         <Grid item xs></Grid>
-      </Grid> }
+      </Grid>
+      }
 
       <AppBar position="fixed" color="primary" className={classes.appBar}>
           <Toolbar>

@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
 
 .root {
-    width: 140px;
-    height: 190px;
+    width: 160px;
+    height: 210px;
     background-color: white;
     border-radius: 10px;
     align-items: center;
     text-align: center;
+    margin: 0 2px;
 }
 .rootClicked {
-    width: 140px;
-    height: 190px;
+    width: 160px;
+    height: 210px;
     background-color: white;
     border: #00695c solid 5px;
     border-radius: 10px;
