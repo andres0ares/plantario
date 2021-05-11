@@ -34,7 +34,7 @@ export default function Setup() {
                 {
                 resolve: slidesToScrollPlugin,
                 options: {
-                numberOfSlides: 2,
+                numberOfSlides: 1,
                 },
                 },
                 {
