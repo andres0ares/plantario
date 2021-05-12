@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import TouchCarousel from 'react-touch-carousel'
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-//import Slider from "react-slick";
+import Slider from "react-slick";
 
 
 const preset = [
@@ -84,7 +84,14 @@ export default function ShowCarousel(props) {
 
     return (
 
-        <p>hi</p>
+        <Slider {...settings}>
+
+            {preset.map((plant, index) => (
+                <div className={classes.margin}>
+                    <PreCard name={plant.name} click={props.click} data={plant} key={index} />
+                </div>
+            ))}
+        </Slider>
         
 
     )
@@ -93,14 +100,9 @@ export default function ShowCarousel(props) {
 
 /*
 
-<Slider {...settings}>
+<p>hi</p>
 
-            {preset.map((plant, index) => (
-                <div className={classes.margin}>
-                    <PreCard name={plant.name} click={props.click} data={plant} key={index} />
-                </div>
-            ))}
-        </Slider>
+
 
 <Carousel
             plugins={[
