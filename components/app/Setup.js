@@ -6,6 +6,7 @@ import WbSunnyIcon from '@material-ui/icons/WbSunny'
 import OpacityIcon from '@material-ui/icons/Opacity'
 import AcUnitIcon from '@material-ui/icons/AcUnit'
 import Button from '@material-ui/core/Button'
+import FormSetup from './FormSetup'
 
 
 
@@ -39,6 +40,14 @@ const useStyle = makeStyles((theme) => ({
         color: 'white',
         fontFamily: "'Exo 2', sans-serif"
     },
+    p: {
+        color: 'white',
+        fontSize: '14px',
+        margin: '0 5%'
+    },
+    i: {
+        width: '100%'
+    },
 }))
 
 const CssTextField = withStyles({
@@ -69,7 +78,7 @@ const CssTextField = withStyles({
 })(TextField)
 
 
-export default function Setup() {
+export default function Setup(props) {
 
     const schema = {
         name: '',
@@ -79,7 +88,11 @@ export default function Setup() {
     }
 
     const classes = useStyle()
+
     const [config, setConfig] = useState(schema)
+    const [conf, setConf] = useState(false)
+    const [invalid, setInvalid] = useState(false)
+    const [enviar, setEnviar] = useState({name: '', temp: 0, umi: 0, ilu: 0})
 
     const handleForm = (event) => {
 
@@ -99,14 +112,21 @@ export default function Setup() {
     }
 
     const handleEnviar = () => {
-        const enviar = {
+        const n = {
             name: config.name,
             temp: Number(config.temp),
             ilu: Number(config.ilu),
-            imu: Number(config.umi)
+            umi: Number(config.umi)
+        }
+        if((n.temp < 31 && n.temp > 19) && (n.ilu > 1 && n.ilu < 11) && (n.umi < 101 && n.umi > 0)){
+            setEnviar(n)
+            setInvalid(false)
+            setConf(true)
+        }else{
+            setInvalid(true)
         }
 
-        console.log(enviar)
+        
     }
 
     return (
@@ -118,7 +138,7 @@ export default function Setup() {
             <form className={classes.form} autoComplete="off">
                 <CssTextField
                     className={classes.formName}
-                    id="outlined-required"
+                    id="outlined-required-name"
                     name="name"
                     label="Espécie"
                     variant="outlined"
@@ -127,7 +147,7 @@ export default function Setup() {
                 />
                 <CssTextField
                     className={classes.formD}
-                    id="outlined-required"
+                    id="outlined-required-ilu"
                     name="ilu"
                     label={<WbSunnyIcon />}
                     type="number"
@@ -137,7 +157,7 @@ export default function Setup() {
                 />
                 <CssTextField
                     className={classes.formD}
-                    id="outlined-required"
+                    id="outlined-required-temp"
                     name="temp"
                     label={<AcUnitIcon />}
                     type="number"
@@ -147,7 +167,7 @@ export default function Setup() {
                 />
                 <CssTextField
                     className={classes.formD}
-                    id="outlined-required"
+                    id="outlined-required-umi"
                     name="umi"
                     label={<OpacityIcon />}
                     type="number"
@@ -155,13 +175,22 @@ export default function Setup() {
                     value={config.umi}
                     onChange={handleForm}
                 />
+
+                {invalid && <><p className={classes.p}>Parece que um dos dados que você inseriu não é válido.<br />
+                *A temperatura deve está entre 20 e 30, a umidade entre 0 e 100, e o tempo de exposição ao sol entre 2 e 10</p></>}
+
                 <Button onClick={handleApagar} variant="outlined" className={classes.apagar}>
                     Apagar
                 </Button>
-                <Button onClick={handleEnviar} variant="contained" className={classes.enviar}>
-                    Enviar
+                <Button  onClick={handleEnviar} variant="contained" className={classes.enviar}>
+                    Confirmar
                 </Button>
+
             </form>
+
+            {conf && <FormSetup obj={enviar} cancel={props.exit} />}
+            
+
         </div>
     )
 }

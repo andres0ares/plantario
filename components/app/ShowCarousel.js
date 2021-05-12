@@ -63,7 +63,7 @@ export default function ShowCarousel(props) {
         //className: "center",
         // centerMode: true,
         infinite: true,
-        speed: 1000,
+        speed: 500,
         dots: true,
         arrows: false,
         slidesToShow: 2,
@@ -85,8 +85,8 @@ export default function ShowCarousel(props) {
 
        <Slider {...settings}>
            {preset.map((plant, index) => (
-                <div className={classes.margin}>
-                    <PreCard name={plant.name} click={props.click} data={plant} key={index} />
+                <div className={classes.margin} key={index}>
+                    <PreCard name={plant.name} click={props.click} data={plant}  />
                 </div>
             ))}
        </Slider>

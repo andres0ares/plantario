@@ -94,7 +94,7 @@ export default  function App() {
       
       {setup && <Grid container>
         <Grid item xs></Grid>
-        <Grid item xs={12} md={5}><Setup /></Grid>
+        <Grid item xs={12} md={5}><Setup exit={handleClick}/></Grid>
         <Grid item xs></Grid>
       </Grid>
       }
@@ -110,9 +110,21 @@ export default  function App() {
           {setup && <CloseIcon /> }
         </Fab>
         <div className={classes.grow} />
+
+        {refresh ?  
+
         <IconButton edge="end" color="inherit">
-            {refresh ? <DoneAllIcon className={classes.icon} /> : <UpdateIcon onClick={handleRefresh} className={classes.icon} />}
+            <DoneAllIcon className={classes.icon} />
         </IconButton>
+
+        :
+
+        <IconButton onClick={handleRefresh} edge="end" color="inherit">
+          <UpdateIcon  className={classes.icon} />
+        </IconButton>
+
+        }
+
         </Toolbar>
 
         {menu && 
