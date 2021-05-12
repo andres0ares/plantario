@@ -4,8 +4,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import PreCard from './PreCard'
 import { makeStyles } from '@material-ui/core/styles'
-//import "slick-carousel/slick/slick-theme.css";
-//import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 //import Slider from "react-slick";
 
 
