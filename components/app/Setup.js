@@ -11,7 +11,8 @@ import Button from '@material-ui/core/Button'
 
 const useStyle = makeStyles((theme) => ({
     form: {
-        margin: '30px 0',
+        marginTop: '40px',
+        marginBottom: '70px'
     },
     formName: {
         width: '90%',
@@ -32,6 +33,11 @@ const useStyle = makeStyles((theme) => ({
         margin: '10px 0 0 5%',
         color: 'white',
         backgroundImage: 'linear-gradient(to right, #80cbc4 , #26a69a )',
+    },
+    title: {
+        textAlign: 'center',
+        color: 'white',
+        fontFamily: "'Exo 2', sans-serif"
     },
 }))
 
@@ -105,7 +111,8 @@ export default function Setup() {
 
     return (
         <div>
-            
+            <h3 className={classes.title} >Configurar</h3>
+
             <ShowCarousel click={handleSelect}/>
 
             <form className={classes.form} autoComplete="off">

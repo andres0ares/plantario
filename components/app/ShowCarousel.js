@@ -4,6 +4,11 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import PreCard from './PreCard'
 import { makeStyles } from '@material-ui/core/styles'
+import TouchCarousel from 'react-touch-carousel'
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import Slider from "react-slick";
+
 
 const preset = [
     {
@@ -44,16 +49,57 @@ const useStyle = makeStyles((theme) => ({
     },
     arrowDisabled: {
         color: '#b2dfdb'
-    },    
+    },
+    margin: {
+        padding: '15px',
+        marginLeft: '30px'
+    }, 
 }))
 
 export default function ShowCarousel(props) {
 
     const classes = useStyle()
 
+    let settings = {
+        //className: "center",
+        // centerMode: true,
+        infinite: true,
+        speed: 1000,
+        dots: true,
+        arrows: false,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 1
+                },
+            }
+        ],  
+    };
+      
+   
+
     return (
 
-        <Carousel
+        <Slider {...settings}>
+
+            {preset.map((plant, index) => (
+                <div className={classes.margin}>
+                    <PreCard name={plant.name} click={props.click} data={plant} key={index} />
+                </div>
+            ))}
+        </Slider>
+
+    )
+
+}
+
+/*
+
+<Carousel
             plugins={[
                 'centered',
                 'infinite',
@@ -88,6 +134,4 @@ export default function ShowCarousel(props) {
                 ))}
             </Carousel>
 
-    )
-
-}
+*/
