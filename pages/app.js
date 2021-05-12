@@ -13,9 +13,9 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 
-import AppNav from '../components/app/AppNav'
 import Status from '../components/app/Status'
 import Setup from '../components/app/Setup'
+import Relatorio from '../components/app/Relatorio'
 
 // Icons
 
@@ -25,6 +25,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import DoneAllIcon from '@material-ui/icons/DoneAll'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import UpdateIcon from '@material-ui/icons/Update'
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn'
 
 const dados = { 
   temperatura: '25º graus',
@@ -69,12 +70,25 @@ export default  function App() {
   const [setup, setSetup] = useState(false)
   const [menu, setMenu] = useState(false)
   const [refresh, setRefresh] = useState(false)
+  const [relatorio, setRelatorio] = useState(false)
 
   const classes = useStyle()
 
-  const handleClick = () => {
-    setSetup(!setup)
-    setStatus(!status)
+  const openStatus = () => {
+    setSetup(false)
+    setStatus(true)
+    setRelatorio(false)
+  }
+  const openSetup = () => {
+    setSetup(true)
+    setStatus(false)
+    setRelatorio(false)
+  }
+
+  const openRelatorio = () => {
+    setSetup(false)
+    setStatus(false)
+    setRelatorio(true)
   }
 
   const handleMenu = () => {
@@ -94,36 +108,62 @@ export default  function App() {
       
       {setup && <Grid container>
         <Grid item xs></Grid>
-        <Grid item xs={12} md={5}><Setup exit={handleClick}/></Grid>
+        <Grid item xs={12} md={5}><Setup exit={openStatus}/></Grid>
         <Grid item xs></Grid>
       </Grid>
       }
 
+      {
+        relatorio && <Grid container>
+          <Grid item xs></Grid>
+          <Grid item xs={12} md={5}><Relatorio /></Grid>
+          <Grid item xs></Grid>
+        </Grid>
+      }
+
+
+
+
       <AppBar position="fixed" color="primary" className={classes.appBar}>
 
         <Toolbar>
-        <IconButton onClick={handleMenu} edge="start" color="inherit" aria-label="open drawer">
-            { menu ? <ExpandMoreIcon className={classes.icon} /> : <MenuIcon className={classes.icon} />}
-        </IconButton>
-        <Fab aria-label="add" onClick={handleClick} className={classes.fabButton}>
-          {status && <AddIcon /> }
-          {setup && <CloseIcon /> }
-        </Fab>
-        <div className={classes.grow} />
+          <IconButton onClick={handleMenu} edge="start" color="inherit" aria-label="open drawer">
+              { menu ? <ExpandMoreIcon className={classes.icon} /> : <MenuIcon className={classes.icon} />}
+          </IconButton>
 
-        {refresh ?  
+          {status &&  
+            <Fab aria-label="add" onClick={openSetup} className={classes.fabButton}>
+              <AddIcon />
+            </Fab>
+          }
+          {setup && 
+            <Fab aria-label="add" onClick={openStatus} className={classes.fabButton}>
+              <CloseIcon /> 
+            </Fab>
+          }
+          {relatorio && 
+            <Fab aria-label="add" onClick={openStatus} className={classes.fabButton}>
+              <KeyboardReturnIcon/>
+            </Fab>
+          }            
+          
 
-        <IconButton edge="end" color="inherit">
-            <DoneAllIcon className={classes.icon} />
-        </IconButton>
+          <div className={classes.grow} />
 
-        :
 
-        <IconButton onClick={handleRefresh} edge="end" color="inherit">
-          <UpdateIcon  className={classes.icon} />
-        </IconButton>
+          {(status || relatorio) && (refresh ?  
 
-        }
+          <IconButton edge="end" color="inherit">
+              <DoneAllIcon className={classes.icon} />
+          </IconButton>
+
+          :
+
+          <IconButton onClick={handleRefresh} edge="end" color="inherit">
+            <UpdateIcon  className={classes.icon} />
+          </IconButton>
+
+          )}
 
         </Toolbar>
 
@@ -135,11 +175,11 @@ export default  function App() {
                 <ListItemText primary="Início" />
               </ListItem></Link>
               <Divider />
-              <ListItem button>
+              <ListItem button onClick={openRelatorio}>
                 <ListItemText primary="Relatórios" />
               </ListItem>
               <Divider />
-              <ListItem button onClick={handleClick}>
+              <ListItem button onClick={openSetup}>
                 <ListItemText primary="Configuração" />
               </ListItem>
             </List>
