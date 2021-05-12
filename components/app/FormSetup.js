@@ -3,7 +3,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
-const { APP_PASSWORD } = process.env
+const  PASSWORD  = process.env.PASSWORD
 
 const useStyle = makeStyles((theme) => ({
     form: {
@@ -77,7 +77,7 @@ export default function FormSetup(props) {
     }
 
     const handleEnviar = () => {
-        if(senha == APP_PASSWORD){
+        if(senha == PASSWORD){
             setSend(true)
             setWrong(false)
             console.log('confirmed')
