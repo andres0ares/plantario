@@ -13,6 +13,7 @@ export default function PreCard(props) {
 
     const handleClick = () => {
         setClick(!click)
+        props.click(props.data)
     }
 
     return (
