@@ -4,10 +4,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import PreCard from './PreCard'
 import { makeStyles } from '@material-ui/core/styles'
-import TouchCarousel from 'react-touch-carousel'
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-import Slider from "react-slick";
+//import "slick-carousel/slick/slick-theme.css";
+//import "slick-carousel/slick/slick.css";
+//import Slider from "react-slick";
 
 
 const preset = [
@@ -84,27 +83,7 @@ export default function ShowCarousel(props) {
 
     return (
 
-        <Slider {...settings}>
-
-            {preset.map((plant, index) => (
-                <div className={classes.margin}>
-                    <PreCard name={plant.name} click={props.click} data={plant} key={index} />
-                </div>
-            ))}
-        </Slider>
-        
-
-    )
-
-}
-
-/*
-
-<p>hi</p>
-
-
-
-<Carousel
+        <Carousel
             plugins={[
                 'centered',
                 'infinite',
@@ -138,5 +117,17 @@ export default function ShowCarousel(props) {
                 
                 ))}
             </Carousel>
+
+    )
+
+}
+
+/*
+
+<p>hi</p>
+
+
+
+
 
 */
