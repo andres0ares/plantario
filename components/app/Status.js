@@ -74,10 +74,10 @@ export default function Status(props) {
                             Configuração
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                            Temperatura: 28º <br />
-                            Umidade: 65% <br />
-                            Exposição: 5hrs <br />
-                            Espécie: Hortelã
+                            Espécie: {props.set.name}<br />
+                            Temperatura: {props.set.temp}º graus<br />
+                            Umidade: {props.set.umi}% <br />
+                            Exposição: {props.set.ilu}hrs 
                         </Typography>
                         </CardContent>
                     </div>

@@ -82,7 +82,7 @@ export default function FormSetup(props) {
             setWrong(false)
 
             const url = `/api/command`
-            console.log(obj)
+    
             const res = await fetch(
                 url,
                 {
@@ -96,8 +96,9 @@ export default function FormSetup(props) {
             
             const result = await res.json()
             if(result.success) {
-                console.log(result.data)
+
                 setSend(true)
+                setTimeout(() => props.cancel(), 3000)
             }
 
         }else{

@@ -64,13 +64,14 @@ const useStyle = makeStyles((theme) => ({
   }
 }))
 
-export default  function App() { 
+export default  function App({ opt }) { 
 
   const [status, setStatus] = useState(true)
   const [setup, setSetup] = useState(false)
   const [menu, setMenu] = useState(false)
   const [refresh, setRefresh] = useState(false)
   const [relatorio, setRelatorio] = useState(false)
+  const [opts, setOpts] = useState(opt)
 
   const classes = useStyle()
 
@@ -78,6 +79,7 @@ export default  function App() {
     setSetup(false)
     setStatus(true)
     setRelatorio(false)
+    handleRefresh()
   }
   const openSetup = () => {
     setSetup(true)
@@ -95,16 +97,33 @@ export default  function App() {
     setMenu(!menu)
   }
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setRefresh(true)
+    
+    const url = `/api/command`
+    const res = await fetch(
+      url,
+      {
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      method: 'GET'
+      }
+    )
+    const result = await res.json()
+    if(result.success) {
+      setOpts(result.data)
+    }
+
     setTimeout(() => setRefresh(false), 5000)
   }
+
 
   return (
     <div className={Styles.root}>
           
 
-      {status && <div className={Styles.status}><Status data={dados}/></div>}
+      {status && <div className={Styles.status}><Status data={dados} set={opts}/></div>}
       
       {setup && <Grid container>
         <Grid item xs></Grid>
@@ -190,5 +209,13 @@ export default  function App() {
       
     </div>
   )
+
+}
+
+App.getInitialProps = async (context) => {
+
+  const response = await fetch('https://plantario.oandre.com/api/command')
+  const config = await response.json()
+  return { opt: config.data }
 
 }
