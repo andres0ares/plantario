@@ -64,7 +64,7 @@ const useStyle = makeStyles((theme) => ({
   }
 }))
 
-export default  function App({ opt }) { 
+export default  function App({ opt, repor }) { 
 
   const [status, setStatus] = useState(true)
   const [setup, setSetup] = useState(false)
@@ -72,6 +72,8 @@ export default  function App({ opt }) {
   const [refresh, setRefresh] = useState(false)
   const [relatorio, setRelatorio] = useState(false)
   const [opts, setOpts] = useState(opt)
+  const [reports, setReports] = useState(repor)
+  const [report, setReport] = useState(repor[repor.length -1])
 
   const classes = useStyle()
 
@@ -100,9 +102,11 @@ export default  function App({ opt }) {
   const handleRefresh = async () => {
     setRefresh(true)
     
-    const url = `/api/command`
-    const res = await fetch(
-      url,
+    const url1 = `/api/command`
+    const url2 = '/api/report'
+
+    const res1 = await fetch(
+      url1,
       {
       headers: {
           'Content-Type': 'application/json'
@@ -110,9 +114,26 @@ export default  function App({ opt }) {
       method: 'GET'
       }
     )
-    const result = await res.json()
-    if(result.success) {
-      setOpts(result.data)
+
+    const res2 = await fetch(
+      url2,
+      {
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      method: 'GET'
+      }
+    )
+
+    const result1 = await res1.json()
+    if(result1.success) {
+      setOpts(result1.data)
+    }
+
+    const result2 = await res2.json()
+    if(result2.success) {
+      setReports(result2.data)
+      setReport(result2.data[result2.data.length -1])
     }
 
     setTimeout(() => setRefresh(false), 5000)
@@ -123,7 +144,7 @@ export default  function App({ opt }) {
     <div className={Styles.root}>
           
 
-      {status && <div className={Styles.status}><Status data={dados} set={opts}/></div>}
+      {status && <div className={Styles.status}><Status data={report} set={opts}/></div>}
       
       {setup && <Grid container>
         <Grid item xs></Grid>
@@ -135,7 +156,7 @@ export default  function App({ opt }) {
       {
         relatorio && <Grid container>
           <Grid item xs></Grid>
-          <Grid item xs={12} md={5}><Relatorio /></Grid>
+          <Grid item xs={12} md={5}><Relatorio data={reports} /></Grid>
           <Grid item xs></Grid>
         </Grid>
       }
@@ -190,9 +211,9 @@ export default  function App({ opt }) {
           <div className={classes.menu}>
             <List component="nav" aria-label="secondary mailbox folders">
               <Divider />
-              <Link href={'/'}><ListItem button>
+              <ListItem button onClick={openStatus}>
                 <ListItemText primary="Início" />
-              </ListItem></Link>
+              </ListItem>
               <Divider />
               <ListItem button onClick={openRelatorio}>
                 <ListItemText primary="Relatórios" />
@@ -201,6 +222,10 @@ export default  function App({ opt }) {
               <ListItem button onClick={openSetup}>
                 <ListItemText primary="Configuração" />
               </ListItem>
+              <Divider />
+              <Link href={'/'}><ListItem button>
+                <ListItemText primary="Plantário" />
+              </ListItem></Link>
             </List>
           </div>
         }
@@ -214,8 +239,12 @@ export default  function App({ opt }) {
 
 App.getInitialProps = async (context) => {
 
-  const response = await fetch('https://plantario.oandre.com/api/command')
-  const config = await response.json()
-  return { opt: config.data }
+  const response1 = await fetch('https://plantario.oandre.com/api/command')
+  const response2 = await fetch('https://plantario.oandre.com/api/report')
+
+  const config = await response1.json()
+  const reports = await response2.json()
+
+  return { opt: config.data, repor: reports.data }
 
 }

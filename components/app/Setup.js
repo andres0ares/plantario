@@ -177,7 +177,7 @@ export default function Setup(props) {
                 />
 
                 {invalid && <><p className={classes.p}>Parece que um dos dados que você inseriu não é válido.<br />
-                *A temperatura deve está entre 20 e 30, a umidade entre 0 e 100, e o tempo de exposição ao sol entre 2 e 10</p></>}
+                *A temperatura deve estar entre 20 e 30, a umidade entre 0 e 100, e o tempo de exposição ao sol entre 2 e 10</p></>}
 
                 <Button onClick={handleApagar} variant="outlined" className={classes.apagar}>
                     Apagar

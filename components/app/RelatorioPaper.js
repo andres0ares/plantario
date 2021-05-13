@@ -30,16 +30,15 @@ const useStyle = makeStyles((theme) => ({
 export default function RelatorioPaper(props) {
 
     const classes = useStyle()
-    const day = new Date().toDateString()
+    const day = props.data.date.slice(4, 16)
 
     return (
         <Paper elevation={3} className={classes.root} >
-            <h4 className={classes.title}>{day}</h4>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-            Informações do plantário
+            Relatório Diário
             </Typography>
             <Typography variant="h5" component="h2">
-            Status
+            {day}
             </Typography>
             <Grid container>
                 <Grid item xs={1} className={classes.icon} >
@@ -51,7 +50,7 @@ export default function RelatorioPaper(props) {
                         Temperatura
                         </Typography>
                         <Typography variant="body2" component="p">
-                        A temperatura atual é de .
+                        Máxima de {props.data.tempMax}ºC e mínima de {props.data.tempMin}ºC.
                         </Typography>
                     </div>                                
                 </Grid>
@@ -66,7 +65,7 @@ export default function RelatorioPaper(props) {
                         Reservatório
                         </Typography>
                         <Typography variant="body2" component="p">
-                        O nível de àgua no reservatório está em .
+                        Na última medição o reservatório estava em {props.data.reservatorio}%.
                         </Typography>
                     </div>                                
                 </Grid>
@@ -81,7 +80,7 @@ export default function RelatorioPaper(props) {
                         Exposição ao sol
                         </Typography>
                         <Typography variant="body2" component="p">
-                        O plantário está a esposto ao sol.
+                        O plantário passou {props.data.ilu}hs exposto ao sol.
                         </Typography>
                     </div>                                
                 </Grid>
@@ -96,7 +95,7 @@ export default function RelatorioPaper(props) {
                         Umidade
                         </Typography>
                         <Typography variant="body2" component="p">
-                        A taxa de umidade do solo está em .
+                        Na última medição a umidade estava à {props.data.umi}%.
                         </Typography>
                     </div>                                
                 </Grid>

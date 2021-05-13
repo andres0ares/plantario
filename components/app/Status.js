@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Status(props) {
 
     const classes = useStyles()
-    const {temperatura, nivelAgua, timeLight, umidade} = props.data
+    const {temp, reservatorio, ilu, umi} = props.data
 
     return (
         <>
@@ -114,7 +114,7 @@ export default function Status(props) {
                                     Temperatura
                                     </Typography>
                                     <Typography variant="body2" component="p">
-                                    A temperatura atual é de {temperatura}.
+                                    A temperatura atual é de {temp}ºC.
                                     </Typography>
                                 </div>                                
                             </Grid>
@@ -129,7 +129,7 @@ export default function Status(props) {
                                     Reservatório
                                     </Typography>
                                     <Typography variant="body2" component="p">
-                                    O nível de àgua no reservatório está em {nivelAgua}.
+                                    O nível de àgua no reservatório está em {reservatorio}%.
                                     </Typography>
                                 </div>                                
                             </Grid>
@@ -144,7 +144,7 @@ export default function Status(props) {
                                     Exposição ao sol
                                     </Typography>
                                     <Typography variant="body2" component="p">
-                                    O plantário está a {timeLight} esposto ao sol.
+                                    O plantário está a {ilu}hs exposto ao sol.
                                     </Typography>
                                 </div>                                
                             </Grid>
@@ -159,7 +159,7 @@ export default function Status(props) {
                                     Umidade
                                     </Typography>
                                     <Typography variant="body2" component="p">
-                                    A taxa de umidade do solo está em {umidade}.
+                                    A taxa de umidade do solo está em {umi}%.
                                     </Typography>
                                 </div>                                
                             </Grid>
