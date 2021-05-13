@@ -1,9 +1,12 @@
 import mongoose from 'mongoose'
+import password from './password'
+
 const { MONGODB_URI } = process.env
 
 const connection = {}
 
 async function dbConnect() {
+    console.log(password)
     if(connection.isConnected) return
 
     const opts = {

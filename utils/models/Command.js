@@ -1,15 +1,19 @@
 import mongoose from 'mongoose'
 
 const CommandSchema = new mongoose.Schema({
-    ledRed: {
+    name: {
+        type: String,
+        required: true
+    },
+    temp: {
         type: Number,
         required: true
     },
-    ledGre: {
+    ilu: {
         type: Number,
         required: true
     },
-    ledYel: {
+    umi: {
         type: Number,
         required: true
     }

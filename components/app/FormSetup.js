@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import VerifyPassword from '../../utils/password'
 
-const  PASSWORD  = process.env.PASSWORD
 
 const useStyle = makeStyles((theme) => ({
     form: {
@@ -76,12 +76,29 @@ export default function FormSetup(props) {
         setSenha(event.target.value)
     }
 
-    const handleEnviar = () => {
-        if(senha == PASSWORD){
-            setSend(true)
+    const handleEnviar = async () => {
+        if(VerifyPassword(senha)){
+            
             setWrong(false)
-            console.log('confirmed')
+
+            const url = `/api/command`
             console.log(obj)
+            const res = await fetch(
+                url,
+                {
+                body: JSON.stringify(obj),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+                }
+            )
+            
+            const result = await res.json()
+            if(result.success) {
+                console.log(result.data)
+                setSend(true)
+            }
 
         }else{
             setWrong(true)
