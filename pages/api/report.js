@@ -60,7 +60,7 @@ export default async (req, res)  => {
                 
             } catch (error) {
                 console.log(error)
-                res.status(400).json({success: false, error: error})
+                res.status(400).json({success: false, body: req.body,  error: error})
             }
             break
         default:
