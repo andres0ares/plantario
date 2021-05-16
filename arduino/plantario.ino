@@ -5,22 +5,49 @@
 #include <string.h>
 
 #ifndef STASSID
-#define STASSID "brisa-1123109"  //nome do wifi
-#define STAPSK  "hidiqmzu"  //senha wifi    
+#define STASSID "********"  //nome do wifi
+#define STAPSK  "********"  //senha wifi    
 #define LED 13   
 #endif
 
 const char* ssid = STASSID;
 const char* password = STAPSK;
-
 const char* host = "plantario.oandre.com";
 const int httpsPort = 443;
 const char fingerprint[] PROGMEM = "ccd3380ed0c69d741c8b01d6d0c91ad6526ff1e3";
+
 
 int ilu = 5;
 int umi = 60;
 int temp = 29;
 int reservatorio = 70;
+
+
+void setup() {
+  // put your setup code here, to run once:
+
+  Serial.begin(9600);
+  connectWifi();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
+
+   
+    getConfig(); // as variáveis globais temp, umi e ilu serão atualizadas
+    
+    sendReport(temp - 1, ilu - 1, umi - 1, reservatorio - 1);  // envia os valores da temperatura, iluminacao, umidade, e reservatorio para o banco de dados
+    
+    delay(10000);
+
+     
+  
+  }else{
+    connectWifi();
+  }
+
+}
 
 void connectWifi(){
   WiFi.begin(ssid, password);
@@ -29,6 +56,7 @@ void connectWifi(){
     Serial.print("Connecting..");
   }
 }
+
 
 void getConfig() {
   
@@ -81,9 +109,9 @@ void getConfig() {
       }
 }
 
-void sendReport () {
+void sendReport (int temp1, int ilu1, int umi1, int reservatorio1) {
 
-WiFiClientSecure client;
+      WiFiClientSecure client;
      
       //connectando ao host, usando o fingerprint
       client.setFingerprint(fingerprint);
@@ -92,34 +120,30 @@ WiFiClientSecure client;
         // coneccao falhou
         return;
       }
-
-      int temp1 = 26;
-      int ilu1 = 4;
-      int umi1 = 57;
-      int reservatorio1 = 65;
-
-      char *body = "{\"temp\": 21, \"ilu\": 3, \"umi\": 56, \"reservatorio\": 77}";
       
-      // "{\"temp\": " + String(temp1) + ", \"ilu\": " + String(ilu1) + ", \"umi\": " + String(umi1) + ", \"reservatorio\": " + String(reservatorio1) + "}"
-      // "{\"temp\": 21, \"ilu\": 3, \"umi\": 56, \"reservatorio\": 77}" 
-      // "{"temp": 21, "ilu": 3, "umi": 56, "reservatorio": 77}" 
-
-      //snprintf(body, sizeof body, "{\"temp\": %d, \"ilu\": %d, \"umi\": %d, \"reservatorio\": %d}", temp1, ilu1, umi1, reservatorio1);
-
-      Serial.println(body);
-      Serial.println(strlen(body));
+      StaticJsonDocument<200> root;
+            
+      root["temp"] = temp1;
+      root["ilu"] = ilu1;
+      root["umi"] = umi1;
+      root["reservatorio"] = reservatorio1;
+      serializeJson(root, Serial);
       
-      String url = "/api/report";
-      client.print(String("POST ") + url + " HTTP/1.1\r\n" +
-               "Host: " + host + "\r\n" +
-               "User-Agent: BuildFailureDetectorESP8266\r\n" +
-               "Content-Type: application/json"+ "\r\n" +
-               "Content-Length: "+ strlen(body) + "\r\n\r\n" + body + "\r\n" +
-               "Connection: close\r\n\r\n");
+      String url = "/api/report";      
+      client.print("POST ");
+      client.print(url);
+      client.println(" HTTP/1.1");
+      client.print("Host: ");
+      client.println(host);
+      client.println("Connection: close\r\nContent-Type: application/json");
+      client.print("Content-Length: ");
+      client.print(measureJson(root));
+      client.print("\r\n");
+      client.println();
+      serializeJson(root, client);
+      
 
       //solicitacao enviada
-
-      
       
       while (client.connected()) {
         String line = client.readStringUntil('\n');
@@ -129,49 +153,4 @@ WiFiClientSecure client;
         }
       }
 
-      String line = client.readStringUntil('\n');
-      if (line.startsWith("{\"success\":true")) {
-          Serial.println(line);
-          digitalWrite(LED, HIGH);
-          delay(5000);
-          digitalWrite(LED, LOW);
-          delay(1000);      
-      }else if(line.startsWith("{\"success\":false")) {
-          Serial.println(line);
-          digitalWrite(LED, HIGH);
-          delay(7000);
-          digitalWrite(LED, LOW);
-          delay(1000);      
-      }
-
-}
-
-void setup() {
-  // put your setup code here, to run once:
-
-  Serial.begin(9600);
-  pinMode(LED, OUTPUT);
-  connectWifi();
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-  if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
-
-    
-    digitalWrite(LED, HIGH);
-    delay(1000);
-    digitalWrite(LED, LOW);
-    delay(1000);
-    
-    getConfig();
-    sendReport();  
-    delay(10000);
-
-     
-  
-  }else{
-    connectWifi();
-  }
-  
 }
