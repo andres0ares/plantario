@@ -6,8 +6,7 @@
 
 #ifndef STASSID
 #define STASSID "********"  //nome do wifi
-#define STAPSK  "********"  //senha wifi    
-#define LED 13   
+#define STAPSK  "********"  //senha wifi     
 #endif
 
 const char* ssid = STASSID;
@@ -95,11 +94,8 @@ void getConfig() {
         DeserializationError err = deserializeJson(doc, line);
         
         if(err) { return; }
+       
         Serial.println(line);
-        digitalWrite(LED, HIGH);
-        delay(3000);
-        digitalWrite(LED, LOW);
-        delay(1000);
         
         temp = doc["data"]["temp"];
         ilu = doc["data"]["ilu"];

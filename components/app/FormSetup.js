@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import VerifyPassword from '../../utils/password'
 
 
 const useStyle = makeStyles((theme) => ({
@@ -71,13 +70,31 @@ export default function FormSetup(props) {
     const [ senha , setSenha] = useState('')
     const [ wrong, setWrong] = useState(false)
     const [ send, setSend] = useState(false)
+    const [ enviando, setEnviando] = useState(false)
 
     const handleForm = (event) => {
         setSenha(event.target.value)
     }
 
     const handleEnviar = async () => {
-        if(VerifyPassword(senha)){
+
+        setEnviando(true)
+        
+
+        const pas = await fetch(
+            '/api/verifypassword',
+            {
+            body: JSON.stringify({password: senha}),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+            }
+        )
+
+        const pass = await pas.json()
+
+        if(pass.success){
             
             setWrong(false)
 
@@ -98,17 +115,20 @@ export default function FormSetup(props) {
             if(result.success) {
 
                 setSend(true)
+                setEnviando(false)
                 setTimeout(() => props.cancel(), 3000)
             }
 
         }else{
             setWrong(true)
+            setEnviando(false)
         }
     }
 
     return (
         <form className={classes.form} autoComplete="off">
             <h4 className={classes.title} > digite sua senha</h4>
+            {enviando && <h5 className={classes.title}> Enviando, aguarde...</h5>}
             {send && <h5 className={classes.title}> Enviado com sucesso!</h5>}
             <CssTextField
                 className={classes.formName}
