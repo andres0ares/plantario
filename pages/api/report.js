@@ -28,8 +28,8 @@ export default async (req, res)  => {
 
                 if(result){
 
-                    const newTimeIlu = newestTime - result.newestTime
-                    let setNewTimeIlu = 0;
+                    const newTimeIlu = (newestTime - result.newestTime)
+                    let setNewTimeIlu
                     if(newTimeIlu > 600000 || req.body.ilu < 900) {
                         setNewTimeIlu = result.timeIlu
                     }else{
