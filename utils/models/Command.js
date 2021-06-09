@@ -16,6 +16,10 @@ const CommandSchema = new mongoose.Schema({
     umi: {
         type: Number,
         required: true
+    },
+    openSombrete: {
+        type: Number,
+        required: true
     }
 })
 

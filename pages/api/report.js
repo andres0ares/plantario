@@ -1,4 +1,5 @@
 import Report from '../../utils/models/Report'
+import Command from '../../utils/models/Command'
 import dbConnect from '../../utils/dbConnect'
 
 dbConnect()
@@ -28,6 +29,7 @@ export default async (req, res)  => {
 
                 if(result){
 
+                    // atualiza o newestTime e atualiza o tempo de exposicao ao sol 
                     const newTimeIlu = (newestTime - result.newestTime)
 
                     let setNewTimeIlu
@@ -38,6 +40,23 @@ export default async (req, res)  => {
                         setNewTimeIlu = result.timeIlu + newTimeIlu
                     }
 
+                    if(setNewTimeIlu > 7200000) { //maior que duas horas
+
+                        const config = await Command.find({})
+                        const configTime = (config[config.legth -1].ilu * 3600000)
+
+                        if(setNewTimeIlu >= configTime) {
+                            
+                            config[config.legth -1].openSombrete = 1
+                            await Command.replaceOne({_id: "609d2193b4c0a3368dd69077"}, config);
+                        }
+
+
+                    } 
+
+
+
+                    //Cria novo objeto report com as informacoes atualizadas
                     const newReport = {
                         date: date,
                         newestTime: newestTime,

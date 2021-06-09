@@ -84,7 +84,7 @@ export default function Setup(props) {
         name: '',
         temp: '',
         umi: '',
-        ilu: ''
+        ilu: '',
     }
 
     const classes = useStyle()
@@ -92,7 +92,7 @@ export default function Setup(props) {
     const [config, setConfig] = useState(schema)
     const [conf, setConf] = useState(false)
     const [invalid, setInvalid] = useState(false)
-    const [enviar, setEnviar] = useState({name: '', temp: 0, umi: 0, ilu: 0})
+    const [enviar, setEnviar] = useState({name: '', temp: 0, umi: 0, ilu: 0, openSombrete: 0})
 
     const handleForm = (event) => {
 
@@ -116,7 +116,8 @@ export default function Setup(props) {
             name: config.name,
             temp: Number(config.temp),
             ilu: Number(config.ilu),
-            umi: Number(config.umi)
+            umi: Number(config.umi),
+            openSombrete: 0
         }
         if((n.temp < 31 && n.temp > 19) && (n.ilu > 1 && n.ilu < 11) && (n.umi < 101 && n.umi > 0)){
             setEnviar(n)
