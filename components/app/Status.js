@@ -59,7 +59,23 @@ const useStyles = makeStyles((theme) => ({
 export default function Status(props) {
 
     const classes = useStyles()
-    const {temp, reservatorio, ilu, umi} = props.data
+    const {temp, reservatorio, ilu, umi, timeIlu} = props.data
+
+    function format(time) {   
+        // Hours, minutes and seconds
+        var hrs = ~~(time / 3600);
+        var mins = ~~((time % 3600) / 60);
+        var secs = ~~time % 60;
+    
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        var ret = "";
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        return ret;
+    }
 
     return (
         <>
@@ -144,7 +160,12 @@ export default function Status(props) {
                                     Exposição ao sol
                                     </Typography>
                                     <Typography variant="body2" component="p">
-                                    O plantário está a {ilu}hs exposto ao sol.
+                                    {(ilu < 900) && "Atenção: Movimente o plantário para um lugar mais iluminado."}
+                                    </Typography>
+                                    <Typography variant="body2" component="p">
+            
+                                    Tempo de exposição ao sol: {format(timeIlu / 1000)}.
+                                    Valor do sensor: {ilu}.
                                     </Typography>
                                 </div>                                
                             </Grid>
