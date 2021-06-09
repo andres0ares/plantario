@@ -5,6 +5,9 @@ const ReportSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    newestTime: {
+        type: Number,
+    },
     temp: {
         type: Number,
         required: true
@@ -18,6 +21,10 @@ const ReportSchema = new mongoose.Schema({
         required: true
     },
     ilu: {
+        type: Number,
+        required: true
+    },
+    timeIlu: {
         type: Number,
         required: true
     },

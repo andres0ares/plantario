@@ -22,17 +22,28 @@ export default async (req, res)  => {
             try {
 
                 const date = new Date().toDateString()
+                const newestTime = new Date().getTime()
+
                 const result = await Report.findOne({date: date});
 
                 if(result){
 
+                    const newTimeIlu = newestTime - result.newestTime
+                    let setNewTimeIlu = 0;
+                    if(newTimeIlu > 600000 || req.body.ilu < 900) {
+                        setNewTimeIlu = result.timeIlu
+                    }else{
+                        setNewTimeIlu = result.timeIlu + newTimeIlu
+                    }
 
                     const newReport = {
                         date: date,
+                        newestTime: newestTime,
                         temp: req.body.temp,
                         tempMin: req.body.temp < result.tempMin ? req.body.temp : result.tempMin,
                         tempMax: req.body.temp > result.tempMax ? req.body.temp : result.tempMax,
                         ilu: req.body.ilu,
+                        timeIlu: setNewTimeILu,
                         umi: req.body.umi,
                         reservatorio: req.body.reservatorio
                     }
@@ -41,13 +52,16 @@ export default async (req, res)  => {
                     res.status(201).json({success: true, data: report})
 
                 }else{
+
                     
                     const newReport = {
                         date: date,
+                        newestTime: newestTime,
                         temp: req.body.temp,
                         tempMin:req.body.temp,
                         tempMax: req.body.temp,
                         ilu: req.body.ilu,
+                        timeIlu: 0,
                         umi: req.body.umi,
                         reservatorio: req.body.reservatorio
                     }
