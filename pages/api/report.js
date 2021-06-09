@@ -29,7 +29,9 @@ export default async (req, res)  => {
                 if(result){
 
                     const newTimeIlu = (newestTime - result.newestTime)
+
                     let setNewTimeIlu
+                    
                     if(newTimeIlu > 600000 || req.body.ilu < 900) {
                         setNewTimeIlu = result.timeIlu
                     }else{
@@ -43,7 +45,7 @@ export default async (req, res)  => {
                         tempMin: req.body.temp < result.tempMin ? req.body.temp : result.tempMin,
                         tempMax: req.body.temp > result.tempMax ? req.body.temp : result.tempMax,
                         ilu: req.body.ilu,
-                        timeIlu: setNewTimeILu,
+                        timeIlu: setNewTimeIlu,
                         umi: req.body.umi,
                         reservatorio: req.body.reservatorio
                     }
