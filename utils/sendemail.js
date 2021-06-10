@@ -1,5 +1,7 @@
 "use strict"
 import nodemailer from 'nodemailer'
+const { SENDEMAIL_EMAIL, SENDEMAIL_PASSWORD } = process.env
+
 
 export default async function main() {
  
@@ -10,8 +12,8 @@ export default async function main() {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: process.env.SENDEMAIL_EMAIL, 
-      pass: process.env.SENDEMAIL_PASSWORD, 
+      user: SENDEMAIL_EMAIL, 
+      pass: SENDEMAIL_PASSWORD, 
     },
   });
 
