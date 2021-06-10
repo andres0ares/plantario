@@ -57,7 +57,7 @@ export default async (req, res)  => {
 
                     let sendedEmail
                     if(req.body.reservatorio == 1 && !result.sendedEmail){
-                        sendemail()
+                        sendmail()
                         sendedEmail = true
                     }else if(req.body.reservatorio == 0 && result.sendedEmail) {
                         sendedEmail = false
