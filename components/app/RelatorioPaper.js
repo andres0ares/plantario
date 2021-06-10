@@ -32,6 +32,22 @@ export default function RelatorioPaper(props) {
     const classes = useStyle()
     const day = props.data.date.slice(4, 16)
 
+    function format(time) {   
+        // Hours, minutes and seconds
+        var hrs = ~~(time / 3600);
+        var mins = ~~((time % 3600) / 60);
+        var secs = ~~time % 60;
+    
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        var ret = "";
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        return ret;
+    }
+
     return (
         <Paper elevation={3} className={classes.root} >
             <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -66,7 +82,7 @@ export default function RelatorioPaper(props) {
                         </Typography>
                         <Typography variant="body2" component="p">
                         Na última medição o reservatório estava em {props.data.reservatorio}%.
-                        </Typography>
+                        </Typography> 
                     </div>                                
                 </Grid>
             </Grid>
@@ -80,7 +96,7 @@ export default function RelatorioPaper(props) {
                         Exposição ao sol
                         </Typography>
                         <Typography variant="body2" component="p">
-                        O plantário passou {props.data.ilu}hs exposto ao sol.
+                        O plantário passou {format(props.data.timeIlu / 1000)}hs exposto ao sol.
                         </Typography>
                     </div>                                
                 </Grid>

@@ -35,6 +35,10 @@ const ReportSchema = new mongoose.Schema({
     reservatorio: {
         type: Number,
         required: true
+    },
+    sendedEmail: {
+        type: Boolean,
+        required: true
     }
 })
 

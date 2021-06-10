@@ -1,6 +1,7 @@
 import Report from '../../utils/models/Report'
 import Command from '../../utils/models/Command'
 import dbConnect from '../../utils/dbConnect'
+import sendemail from '../../utils/sendemail'
 
 dbConnect()
 
@@ -54,6 +55,16 @@ export default async (req, res)  => {
 
                     } 
 
+                    let sendedEmail
+                    if(req.body.reservatorio == 1 && !result.sendedEmail){
+                        sendemail()
+                        sendedEmail = true
+                    }else if(req.body.reservatorio == 0 && result.sendedEmail) {
+                        sendedEmail = false
+                    }else{
+                        sendedEmail = result.sendedEmail
+                    }
+
 
 
                     //Cria novo objeto report com as informacoes atualizadas
@@ -66,7 +77,8 @@ export default async (req, res)  => {
                         ilu: req.body.ilu,
                         timeIlu: setNewTimeIlu,
                         umi: req.body.umi,
-                        reservatorio: req.body.reservatorio
+                        reservatorio: req.body.reservatorio,
+                        sendedEmail: sendedEmail
                     }
 
                     const report = await Report.replaceOne({date: date}, newReport);
@@ -84,7 +96,8 @@ export default async (req, res)  => {
                         ilu: req.body.ilu,
                         timeIlu: 0,
                         umi: req.body.umi,
-                        reservatorio: req.body.reservatorio
+                        reservatorio: req.body.reservatorio,
+                        sendedEmail: false
                     }
                   
                     const report = await Report.create(newReport)
