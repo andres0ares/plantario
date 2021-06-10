@@ -96,7 +96,7 @@ export default function RelatorioPaper(props) {
                         Exposição ao sol
                         </Typography>
                         <Typography variant="body2" component="p">
-                        O plantário passou {format(props.data.timeIlu / 1000)}hs exposto ao sol.
+                        O plantário passou {format(props.data.timeIlu / 1000)} exposto ao sol.
                         </Typography>
                     </div>                                
                 </Grid>
