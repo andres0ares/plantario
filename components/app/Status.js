@@ -145,7 +145,7 @@ export default function Status(props) {
                                     Reservatório
                                     </Typography>
                                     <Typography variant="body2" component="p">
-                                    O nível de àgua no reservatório está em {reservatorio}%.
+                                        {reservatorio > 0 ? "O reservatório está cheio" : "O reservatório está vazio"}
                                     </Typography>
                                 </div>                                
                             </Grid>

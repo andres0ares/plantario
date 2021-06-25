@@ -12,7 +12,7 @@ export default async (req, res)  => {
     switch(method) {
         case 'GET':
             try {
-
+ 
                 const report = await Report.find({})
                 res.status(200).json({ success: true, data: report })
                                
@@ -55,14 +55,14 @@ export default async (req, res)  => {
 
                     } 
 
-                    let sendedEmail
-                    if(req.body.reservatorio == 1 && !result.sendedEmail){
+                    let sentEmail
+                    if(req.body.reservatorio == 0 && !result.sentEmail){
                         sendmail()
-                        sendedEmail = true
-                    }else if(req.body.reservatorio == 0 && result.sendedEmail) {
-                        sendedEmail = false
+                        sentEmail = true
+                    }else if(req.body.reservatorio == 1 && result.sentEmail) {
+                        sentEmail = false
                     }else{
-                        sendedEmail = result.sendedEmail
+                        sentEmail = result.sentEmail
                     }
 
 
@@ -78,7 +78,7 @@ export default async (req, res)  => {
                         timeIlu: setNewTimeIlu,
                         umi: req.body.umi,
                         reservatorio: req.body.reservatorio,
-                        sendedEmail: sendedEmail
+                        sentEmail: sentEmail
                     }
 
                     const report = await Report.replaceOne({date: date}, newReport);
@@ -97,7 +97,7 @@ export default async (req, res)  => {
                         timeIlu: 0,
                         umi: req.body.umi,
                         reservatorio: req.body.reservatorio,
-                        sendedEmail: false
+                        sentEmail: false
                     }
                   
                     const report = await Report.create(newReport)

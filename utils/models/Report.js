@@ -36,7 +36,7 @@ const ReportSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    sendedEmail: {
+    sentEmail: {
         type: Boolean,
         required: true
     }

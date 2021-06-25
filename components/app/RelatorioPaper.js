@@ -81,7 +81,7 @@ export default function RelatorioPaper(props) {
                         Reservatório
                         </Typography>
                         <Typography variant="body2" component="p">
-                        Na última medição o reservatório estava em {props.data.reservatorio}%.
+                        {props.data.reservatorio > 0 ? "O reservatório estava cheio" : "O reservatório estava vazio"}
                         </Typography> 
                     </div>                                
                 </Grid>
